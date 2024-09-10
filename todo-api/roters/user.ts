@@ -1,7 +1,6 @@
 import express from 'express';
 import User from '../models/User';
 import mangoose from 'mongoose';
-import { error } from 'node:console';
 
 const userRouter = express.Router();
 

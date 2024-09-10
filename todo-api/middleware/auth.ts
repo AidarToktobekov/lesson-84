@@ -1,13 +1,16 @@
-import { NextFunction, Request , Response} from "express"
+import {Request, Response, NextFunction} from 'express';
 import { HydratedDocument } from 'mongoose';
 import { UserFields, UserMethods } from '../types';
 import User from '../models/User';
 
 export interface RequestWithUser extends Request {
-  user?: HydratedDocument<UserFields & UserMethods>;
+  user?: HydratedDocument<UserFields>;
 }
 
-const auth = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+const auth = async (expressReq : Request, res: Response, next: NextFunction) => {
+  const req = expressReq as RequestWithUser;
+
+
   const headerValue = req.get('Authorization');
 
   if (!headerValue) {
@@ -28,7 +31,7 @@ const auth = async (req: RequestWithUser, res: Response, next: NextFunction) => 
 
   req.user = user;
 
-  return next();
+  return next();  
 };
 
 export default auth;
